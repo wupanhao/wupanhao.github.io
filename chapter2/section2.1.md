@@ -124,11 +124,13 @@ zone文件格式无误还不能保证bind9正常加载zone文件，还应运行s
 ### 检测主机的可用性
 为保证dns的高可用性，需要检测自己解析的每一台主机是否正常工作
 
-* shell script
+
+#### 使用shell script
 这正是Linux的强项，一份shell script足以胜任这份工作
+
+
 ```
 #!/bin/bash
-
 server_list="1.1.1.1 2.2.2.2 3.3.3.3 4.4.4.4"
 
 for i in $server_list
@@ -147,13 +149,16 @@ for i in $server_list
     service bind9 restart
 ```
 
+
 简要说明,利用sed命令去匹配配置文件下有对应ip的解析记录，根据nc的结果决定该取消还是启用该条解析记录,可定期运行该脚本更新解析纪录
 
-### 根据server.list文件自动生成配置文件
+#### 根据server.list文件自动生成配置文件
 
 每次服务器变动都要手动修改配置文件，而且很容易写错，于是利用python读取服务器ip信息自动生成解析记录，只需维护一份server.list文件
 
 server.list文件
+
+
 ```
 @bnu
 1.1.1.1
@@ -170,6 +175,7 @@ server.list文件
 
 
 python文件代码如下
+
 ```
 with open("server.list","r") as fin, open("/etc/bind/db.schonet.other",'w') as fout:
     base = '''$TTL    600
@@ -196,5 +202,6 @@ ns  IN  A   120.25.101.88
             fout.write(zone[0].ljust(15)+'IN  A    '+ip+'\n')
             print('+'+ip)
 ```
+
 
 运行这份脚本，将根据server.list文件,生成bnu.schonet.cn、china.schonet.cn等的解析记录
