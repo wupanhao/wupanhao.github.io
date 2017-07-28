@@ -23,14 +23,15 @@ apt-get install mariadb-server
     ...
     #skip-networking    #告诉MariaDB (or MySQL) 禁用 TCP/IP 连接。实际测试不注释这行也可以
     ...
-    #bind-address = <some ip-address>   #默认绑定本地回环，也可改为公网ip或0.0.0.0，0.0.0.0等同于注释掉
+    #bind-address = <some ip-address>   
+    #默认绑定本地回环，也可改为公网ip或0.0.0.0，0.0.0.0等同于注释掉
     ...
 ```
 重启mariadb 即可实现远程访问(service mysql restart)，但数据库权限还没有设置
 
 使用mysql登陆mariadb，执行以下语句
 ```
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.17.0.2'IDENTIFIED BY '123456' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'host'IDENTIFIED BY '123456';
 ```
 主机地址、用户名和密码可根据情况更改
 ### 说明
@@ -38,7 +39,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'172.17.0.2'IDENTIFIED BY '123456' WITH GR
 % => 任意主机
 172.17.0.% => 172.17.0.0/24
 
-WITH GRANT OPTION 表示运行该账号把自己有的权限再授权给别的用户
+也可加WITH GRANT OPTION 表示允许该账号把自己有的权限再授权给别的用户
 
 ### 建立相关数据表
 

@@ -12,6 +12,9 @@
 
 
 ### 开启ssh，获取root权限
+
+如果这一步失败多半是路由器用了较新的固件所致，去网上找旧版本的固件手动降级即可
+
 浏览器打开`192.168.31.1`,输入管理密码登陆路由器管理界面
 
 登陆之后你会获取到一个stok,这就是我们后面执行指令的一个凭据
@@ -22,13 +25,19 @@
 然后我们把stok后的`/web/home#router`
 改为`/api/xqnetwork/set_wifi_ap?ssid=sysoremiscool&encryption=NONE&enctype=NONE&channel=1%3B%2Fusr%2Fsbin%2Ftelnetd`
 回车之后稍等一会儿，浏览器返回 
-{"msg":"未能连接到指定WiFi(Probe timeout)","code":1616}，
+{"msg":"未能连接到指定WiFi(Probe timeout)","code":1616}
+
+
+![](img/2.4-1.png)
 
 现在路由器已经开启了telnet服务，可以通过telnet登录上去了，但是密码还没设置好，所以下一步设置root密码
 
 接着把刚才替换的部分
 改为`/api/xqsystem/set_name_password?oldPwd=原管理密码&newPwd=新root密码`，这里的两个密码根据自己的情况填写正确，建议都设置成一样的，不容易忘
 回车以后网页返回 {"code":0}，就证明修改成功
+
+
+![](img/2.4-2.png)
 
 
 然后就可以通过putty、Xshell等工具登录路由器进行刷机了，执行命令`telnet 192.168.31.1`
@@ -54,10 +63,14 @@
 注意这里的固件一定是和路由器版本一一对应的，不能有误，不然一般都会失败
 
 之后就等待路由器刷入固件重启即可
+![](img/2.4-3.png)
+
+
 
 然后你就可以看到一个以Pandora开头的wifi了，大功告成
 
 连接后可以就打开`192.168.1.1`进入潘多拉盒子的管理界面进行配置
 默认用户root，密码为admin
 
+![](img/2.4-4.png)
 

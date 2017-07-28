@@ -25,7 +25,9 @@ sudo apt-get install bind9
 
 ```
 acl trusted {  localhost; };
-acl guest   { 10.10.10.0/24; };//如果用户不在acl域对应的ip范围里会出现查询不到的情况，因此若要投入使用必须保证包含所有ip地址
+acl guest   { 10.10.10.0/24; };
+//如果用户不在acl域对应的ip范围里会出现查询不到的情况
+//因此若要投入使用必须保证包含所有ip地址
 
 view trusted {
     match-clients { trusted; };
@@ -34,7 +36,8 @@ view trusted {
 
     zone "myzone.example" {
         type master;
-        file "trusted/db.myzone.example";//最新测试相对路径无效，改用绝对路径/etc/bind/trusted/db.myzone.example才成功
+        file "/etc/bind/trusted/db.myzone.example";
+        //最新测试相对路径无效，改用绝对路径才成功
     };
     zone "7.168.192.in-addr.arpa" {  //反向解析，也可以不要
         type master;
@@ -49,7 +52,8 @@ view guest {
 
     zone "myzone.example" {
         type master;
-        file "guest/db.myzone.example";//最新测试相对路径无效，改用绝对路径/etc/bind/guest/db.myzone.example才成功
+        file "/etc/bind/guest/db.myzone.example";
+        //最新测试相对路径无效，改用绝对路径才成功
     };
 };
 ```
@@ -152,8 +156,6 @@ for i in $server_list
 
 简要说明,利用sed命令去匹配配置文件下有对应ip的解析记录，根据nc的结果决定该取消还是启用该条解析记录,可定期运行该脚本更新解析纪录
 
-#### 根据server.list文件自动生成配置文件
-
 每次服务器变动都要手动修改配置文件，而且很容易写错，于是利用python读取服务器ip信息自动生成解析记录，只需维护一份server.list文件
 
 server.list文件
@@ -177,7 +179,8 @@ server.list文件
 python文件代码如下
 
 ```
-with open("server.list","r") as fin, open("/etc/bind/db.schonet.other",'w') as fout:
+with open("server.list","r") as fin,\
+ open("/etc/bind/db.schonet.other",'w') as fout:
     base = '''$TTL    600
 @   IN  SOA schonet.cn. root.schonet.cn. (
                   2     ; Serial
