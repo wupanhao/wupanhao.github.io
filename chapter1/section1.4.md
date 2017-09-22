@@ -90,3 +90,93 @@ else{
 
 demo
 ![py-web-player](img/1.4-1.png "py-web-player")
+
+
+## Nodejs版
+
+需要安装express模块
+
+`npm install express`
+
+
+```
+var express = require('express');
+var exec = require('child_process').exec;
+var fs = require('fs'); 
+var path = require('path');  
+var app = express();
+
+var root = '/home/pi/kugou/';
+
+var res = "";
+
+var head = '<html><head><title>Music Player</title><link rel="stylesheet" href="/static/css/bootstrap.min.css">';
+head +=    '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
+head +=    '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">';
+head +=    '</head><body><div class="container"><h1>Web Player(nodejs版)</h1>';
+
+function getList(req,res){
+    var path = root;
+    var body = head;
+    console.log(req.query);
+    console.log(req.query.path);
+    if(req.query && req.query.path)
+    path = decodeURI(req.query.path)+'/';
+    fs.readdir(path,function(err,files){
+
+        //console.log(files);
+        body += '<a href="/dir?path='+ encodeURI(path) + '.." class="btn btn-default">Back</a>';
+        body += '<a href="/" class="btn btn-default">首页</a><br>';
+        body +='当前目录:'+path+'<br>';
+        body +='Directory:<br>';
+        for(var i = 0 ;i < files.length ; i++){
+            if(fs.statSync(path + files[i]).isDirectory() ){
+                url = '/dir?path='+path+files[i];
+                url = encodeURI(url);
+                body += '<a href="' + url +'" class="list-group-item active" >'+files[i]+'</a><br>';
+                }
+        }
+
+        body +='Music:<br>';
+        for(var i = 0 ;i < files.length ; i++){
+            //console.log(path + files[i]);
+            if(fs.statSync(path + files[i]).isFile() && files[i].split('.').pop()=="mp3"){
+                url = '/play?music='+path+files[i];
+                url = encodeURI(url);
+                body += '<a href="' + url +'" class="list-group-item">'+files[i]+'</a>';
+                }
+        }
+
+        //console.log(body);
+        res.send(body);
+    });
+
+}
+
+function playMusic(req , res){
+    res.send("play on " + req.query.music);
+    exec('killall mpg123');
+    exec('killall mpg123');
+    var cmd = 'mpg123 "'+req.query.music+'"';
+    setTimeout(function(){exec(cmd);},500);
+}
+
+app.use('/static', express.static('public'));
+app.get('/',getList);
+app.get('/dir',getList);
+app.get('/play',playMusic);
+
+app.get('/i', function (req, res) {
+   res.send('Hello World');
+})
+
+ 
+var server = app.listen(8081, function () {
+ 
+    var host = server.address().address
+    var port = server.address().port
+ 
+    console.log("应用实例，访问地址为 http://%s:%s", host, port)
+ 
+})
+```

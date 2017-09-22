@@ -7,6 +7,9 @@
     * [1.3 树莓派常用设置](chapter1/section1.3.md)
     * [1.4 第一个项目 网页控制的音乐播放器](chapter1/section1.4.md)
     * [1.5 树莓派音频基础](chapter1/section1.5.md)
+    * [1.6 pianopi 把你的树莓派变成一架钢琴](chapter1/section1.6.md)
+    * [1.7 用树莓派实现无线投屏](chapter1/1.7_用树莓派实现无线投屏.md)
+    * [1.8 在外网通过树莓派看532](chapter1/1.8_外网看532.md)
 * [Chapter2 实验室篇](chapter2/README.md)
     * [2.1 bind9智能dns解析配置指南](chapter2/section2.1.md)
     * [2.2 freeradius认证服务器配置](chapter2/section2.2.md)
@@ -17,4 +20,7 @@
     * [3.1 网页服务器](chapter3/section3.1.md)
     * [3.2 文件服务器](chapter3/section3.2.md)
     * [3.3 代理服务器](chapter3/section3.3.md)
+    * [3.4 主流平台访问samba文件服务器方法总结](chapter3/3.4_samba服务器访问方法.md)
+* [Chapter4 杂篇](chapter4/README.md)
+    * [4.1 otto机器人DIY日记](chapter4/4.1_otto机器人DIY日记.md)
 
