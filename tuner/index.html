@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>古琴-正调定弦</title>
+    <title>调音器</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <select name="" id="menu" onchange="onItemSelected()"></select>
     <canvas class="frequency-bars"></canvas>
     <div class="meter">
         <div class="meter-dot"></div>
@@ -30,17 +31,42 @@
     <script src="lib/app.js"></script>
 
     <script>
+
+        function genPianoNotes(){
+            const piano_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+            const middleA = 440
+            const middleAIndex = 57 // A4 12*4 + 9
+            const notes = []
+            const step = Math.pow(2, 1 / 12)
+            for (let i = 1; i < 9; i++) {
+                for (let j = 0; j < piano_notes.length; j++) {
+                    var item = piano_notes[j];
+                    var index = i * 12 + j
+                    var frequency = middleA * Math.pow(step, index - middleAIndex)
+                    notes.push({
+                        name: item[0],
+                        upper: item[1] || '',
+                        lower: i,
+                        frequency: frequency,
+                        cents: 0,
+                        value: index
+                    })
+                }
+            }
+            return notes
+        }
+
         const guqin_nomal = [
-            ['C ', '一', '弦', 65.41],
-            ['D ', '二', '弦', 73.42],
-            ['F ', '三', '弦', 87.31],
-            ['G ', '四', '弦', 98],
-            ['A ', '五', '弦', 110],
-            ['C', '六', '弦', 130.81],
-            ['D', '七', '弦', 146.83]
+            ['C ', '', '一', 65.41],
+            ['D ', '', '二', 73.42],
+            ['F ', '', '三', 87.31],
+            ['G ', '', '四', 98],
+            ['A ', '', '五', 110],
+            ['C', '', '六', 130.81],
+            ['D', '', '七', 146.83]
         ]
 
-        const notes = guqin_nomal.map((item, index) => {
+        const guqin_nomal_notes = guqin_nomal.map((item, index) => {
             return {
                 name: item[0],
                 upper: item[1],
@@ -51,15 +77,60 @@
             }
         })
 
+        const guqin_slow3_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
+        guqin_slow3_notes[2].frequency = 233
+
+        const guqin_tight5_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
+        guqin_tight5_notes[4].frequency = 116.54
+        guqin_tight5_notes[4].upper = 'b'
+        guqin_tight5_notes[4].name = 'B'
 
         const app = new Application()
 
-        app.notes.allowPlay = false
+        const items = [
+            {
+                name: '钢琴 A4=440hz',
+                allowPlay: true,
+                notes: genPianoNotes()
+            },{
+                name: '古琴-正调 1=F',
+                allowPlay: false,
+                notes: guqin_nomal_notes
+            },{
+                name: '古琴-紧五弦 1=bB',
+                allowPlay: false,
+                notes: guqin_tight5_notes
+            },
+            // {
+            //     name: '古琴-慢三弦 1=E',
+            //     allowPlay: false,
+            //     notes: guqin_slow3_notes
+            // },
+        ]
 
-        app.notes.setNotes(notes)
+        function onItemSelected(){
+            const item = document.querySelector('#menu')
+            console.log(item.value)
+            const selection = items[item.value]
+            app.notes.allowPlay = selection.allowPlay
+            app.notes.setNotes(selection.notes)
+            app.start()
+        }
 
-        app.start()
+        const menu = document.querySelector('#menu')
+        for (let index = 0; index < items.length; index++) {
+            const item = items[index];
+            const ele = document.createElement('option')
+            ele.value = index
+            ele.textContent = item.name
+            // ele.onclick = onItemSelected
+            menu.appendChild(ele)
+        }
+
+        onItemSelected()
+
     </script>
+
 </body>
 
 </html>
