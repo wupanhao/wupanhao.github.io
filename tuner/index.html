@@ -89,20 +89,24 @@
 
         const items = [
             {
-                name: '钢琴 A4=440hz',
+                name: 'piano',
+                title: '钢琴 A4=440hz',
                 allowPlay: true,
                 notes: genPianoNotes()
             },{
-                name: '古琴-正调 1=F',
+                name: 'guqin',
+                title: '古琴-正调 1=F',
                 allowPlay: false,
                 notes: guqin_nomal_notes
             },{
-                name: '古琴-紧五弦 1=bB',
+                name: 'guqin_tight5',
+                title: '古琴-紧五弦 1=bB',
                 allowPlay: false,
                 notes: guqin_tight5_notes
             },
             // {
-            //     name: '古琴-慢三弦 1=E',
+            // name: 'guqin_loose3',
+            //     title: '古琴-慢三弦 1=E',
             //     allowPlay: false,
             //     notes: guqin_slow3_notes
             // },
@@ -112,17 +116,30 @@
             const item = document.querySelector('#menu')
             console.log(item.value)
             const selection = items[item.value]
+            window.location.hash = '#'+item.value
             app.notes.allowPlay = selection.allowPlay
             app.notes.setNotes(selection.notes)
             app.start()
         }
 
         const menu = document.querySelector('#menu')
+        if(window.location.hash.length > 1){
+            try {
+                selection = parseInt(window.location.hash.substr(1))
+            } catch (error) {
+                selection = 0
+            }
+        }
+        console.log(window.location.hash,selection)
+
         for (let index = 0; index < items.length; index++) {
             const item = items[index];
             const ele = document.createElement('option')
+            if(index == selection){
+                ele.selected = true
+            }
             ele.value = index
-            ele.textContent = item.name
+            ele.textContent = item.title
             // ele.onclick = onItemSelected
             menu.appendChild(ele)
         }
