@@ -1,2 +1,2 @@
 theme: jekyll-theme-minimal
-includes: [book/_book]
+include: [book/_book]
