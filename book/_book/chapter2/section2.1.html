@@ -1,0 +1,694 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>2.1 bind9智能dns解析配置指南 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="section2.2.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../chapter1/">
+            
+                <a href="../chapter1/">
+            
+                    
+                    Chapter1 树莓派篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../chapter1/section1.1.html">
+            
+                <a href="../chapter1/section1.1.html">
+            
+                    
+                    1.1 树莓派入坑指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../chapter1/section1.2.html">
+            
+                <a href="../chapter1/section1.2.html">
+            
+                    
+                    1.2 获取树莓派ip地址的N种方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../chapter1/section1.3.html">
+            
+                <a href="../chapter1/section1.3.html">
+            
+                    
+                    1.3 树莓派常用设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../chapter1/section1.4.html">
+            
+                <a href="../chapter1/section1.4.html">
+            
+                    
+                    1.4 第一个项目 网页控制的音乐播放器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../chapter1/section1.5.html">
+            
+                <a href="../chapter1/section1.5.html">
+            
+                    
+                    1.5 树莓派音频基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../chapter1/section1.6.html">
+            
+                <a href="../chapter1/section1.6.html">
+            
+                    
+                    1.6 pianopi 把你的树莓派变成一架钢琴
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../chapter1/1.7_用树莓派实现无线投屏.html">
+            
+                <a href="../chapter1/1.7_用树莓派实现无线投屏.html">
+            
+                    
+                    1.7 用树莓派实现无线投屏
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../chapter1/1.8_外网看532.html">
+            
+                <a href="../chapter1/1.8_外网看532.html">
+            
+                    
+                    1.8 在外网通过树莓派看532
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Chapter2 实验室篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1" data-path="section2.1.html">
+            
+                <a href="section2.1.html">
+            
+                    
+                    2.1 bind9智能dns解析配置指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="section2.2.html">
+            
+                <a href="section2.2.html">
+            
+                    
+                    2.2 freeradius认证服务器配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="section2.3.html">
+            
+                <a href="section2.3.html">
+            
+                    
+                    2.3 freeradius数据库配置(mariadb版)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="section2.4.html">
+            
+                <a href="section2.4.html">
+            
+                    
+                    2.4 小米路由器mini / 青春版刷机指南
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="section2.5.html">
+            
+                <a href="section2.5.html">
+            
+                    
+                    2.5 树莓派配置为路由器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../chapter3/">
+            
+                <a href="../chapter3/">
+            
+                    
+                    Chapter3 Linux服务器篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../chapter3/section3.1.html">
+            
+                <a href="../chapter3/section3.1.html">
+            
+                    
+                    3.1 网页服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../chapter3/section3.2.html">
+            
+                <a href="../chapter3/section3.2.html">
+            
+                    
+                    3.2 文件服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../chapter3/section3.3.html">
+            
+                <a href="../chapter3/section3.3.html">
+            
+                    
+                    3.3 代理服务器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../chapter3/3.4_samba服务器访问方法.html">
+            
+                <a href="../chapter3/3.4_samba服务器访问方法.html">
+            
+                    
+                    3.4 主流平台访问samba文件服务器方法总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../chapter4/">
+            
+                <a href="../chapter4/">
+            
+                    
+                    Chapter4 杂篇
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../chapter4/4.1_otto机器人DIY日记.html">
+            
+                <a href="../chapter4/4.1_otto机器人DIY日记.html">
+            
+                    
+                    4.1 otto机器人DIY日记
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >2.1 bind9智能dns解析配置指南</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="21-bind9&#x667A;&#x80FD;dns&#x89E3;&#x6790;&#x914D;&#x7F6E;&#x6307;&#x5357;">2.1 bind9&#x667A;&#x80FD;dns&#x89E3;&#x6790;&#x914D;&#x7F6E;&#x6307;&#x5357;</h1>
+<p>bind9 &#x662F;&#x8457;&#x540D;&#x7684;&#x5F00;&#x6E90;dns&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x529F;&#x80FD;&#x5341;&#x5206;&#x5F3A;&#x5927;&#xFF0C;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x60F3;&#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x5728;&#x4E0D;&#x540C;&#x7684;&#x5730;&#x65B9;&#x8BF7;&#x6C42;&#x540C;&#x4E00;&#x4E2A;&#x57DF;&#x540D;&#xFF0C;&#x5F97;&#x5230;&#x4E0D;&#x540C;&#x7684;&#x89E3;&#x6790;&#x7ED3;&#x679C;</p>
+<h2 id="&#x51C6;&#x5907;&#x5DE5;&#x4F5C;">&#x51C6;&#x5907;&#x5DE5;&#x4F5C;</h2>
+<p>&#x73AF;&#x5883;&#xFF1A;Ubuntu16.04</p>
+<h2 id="&#x4E00;&#x3001;&#x5B89;&#x88C5;&#x76F8;&#x5173;&#x8F6F;&#x4EF6;">&#x4E00;&#x3001;&#x5B89;&#x88C5;&#x76F8;&#x5173;&#x8F6F;&#x4EF6;</h2>
+<pre><code>sudo apt-get install bind9
+</code></pre><h2 id="&#x4E8C;&#x3001;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;">&#x4E8C;&#x3001;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</h2>
+<p>&#x67E5;&#x770B;/etc/bind&#x76EE;&#x5F55;&#xFF0C;&#x53D1;&#x73B0;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#x6587;&#x4EF6;
+/etc/bind/named.conf
+/etc/bind/named.conf.options
+/etc/bind/named.conf.local
+/etc/bind/named.conf.default-zones</p>
+<p>&#x67E5;&#x770B;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x5B9E;&#x9645;&#x4E0A;&#x662F;named.conf&#x628A;&#x53E6;&#x5916;&#x4E09;&#x4E2A;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5305;&#x542B;&#x4E86;&#x8FDB;&#x6765;</p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x66F4;&#x6539;named.conf.local&#xFF0C;&#x8FD9;&#x9ED8;&#x8BA4;&#x662F;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x914D;&#x7F6E;&#x9879;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x6587;&#x672B;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x5185;&#x5BB9;</p>
+<pre><code>acl trusted {  localhost; };
+acl guest   { 10.10.10.0/24; };
+//&#x5982;&#x679C;&#x7528;&#x6237;&#x4E0D;&#x5728;acl&#x57DF;&#x5BF9;&#x5E94;&#x7684;ip&#x8303;&#x56F4;&#x91CC;&#x4F1A;&#x51FA;&#x73B0;&#x67E5;&#x8BE2;&#x4E0D;&#x5230;&#x7684;&#x60C5;&#x51B5;
+//&#x56E0;&#x6B64;&#x82E5;&#x8981;&#x6295;&#x5165;&#x4F7F;&#x7528;&#x5FC5;&#x987B;&#x4FDD;&#x8BC1;&#x5305;&#x542B;&#x6240;&#x6709;ip&#x5730;&#x5740;
+
+view trusted {
+    match-clients { trusted; };
+
+    allow-recursion { any; };
+
+    zone &quot;myzone.example&quot; {
+        type master;
+        file &quot;/etc/bind/trusted/db.myzone.example&quot;;
+        //&#x6700;&#x65B0;&#x6D4B;&#x8BD5;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x65E0;&#x6548;&#xFF0C;&#x6539;&#x7528;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x624D;&#x6210;&#x529F;
+    };
+    zone &quot;7.168.192.in-addr.arpa&quot; {  //&#x53CD;&#x5411;&#x89E3;&#x6790;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x4E0D;&#x8981;
+        type master;
+        file &quot;trusted/db.192.168.7&quot;;
+    };
+};
+
+view guest {
+    match-clients { guest; };
+
+    allow-recursion { any; };
+
+    zone &quot;myzone.example&quot; {
+        type master;
+        file &quot;/etc/bind/guest/db.myzone.example&quot;;
+        //&#x6700;&#x65B0;&#x6D4B;&#x8BD5;&#x76F8;&#x5BF9;&#x8DEF;&#x5F84;&#x65E0;&#x6548;&#xFF0C;&#x6539;&#x7528;&#x7EDD;&#x5BF9;&#x8DEF;&#x5F84;&#x624D;&#x6210;&#x529F;
+    };
+};
+</code></pre><p>&#x8FD9;&#x6BB5;&#x5185;&#x5BB9;&#x58F0;&#x660E;&#x4E86;&#x4E24;&#x4E2A;acl&#x57DF;&#xFF0C;&#x5206;&#x522B;&#x662F;localhost&#x4E0E;10.10.10.0/24&#x5C40;&#x57DF;&#x7F51;&#x6BB5;&#xFF0C;&#x5E76;&#x7528;&#x4E24;&#x4E2A;view&#x6765;&#x9488;&#x5BF9;&#x8FD9;&#x4E24;&#x4E2A;&#x7F51;&#x6BB5;&#x5BF9;&#x540C;&#x4E00;&#x4E2A;&#x57DF;myzone.example&#x8FDB;&#x884C;&#x4E0D;&#x540C;&#x7684;&#x89E3;&#x6790;&#xFF0C;&#x89E3;&#x6790;&#x6587;&#x4EF6;&#x5206;&#x522B;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x7684;trusted/db.myzone.example&#x548C;guest/db.myzone.example</p>
+<p>guest/db.myzone.example&#x5185;&#x5BB9;&#x5982;&#x4E0B;</p>
+<pre><code>$TTL    604800
+@   IN  SOA myzone.example. root.myzone.example. (
+                  2     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+;
+    IN  NS  ns
+@   IN  A   192.168.1.1
+@   IN  AAAA    ::1
+www IN  A   172.16.1.2
+ns  IN  A   127.0.0.1
+</code></pre><p>trusted/db.myzone.example&#x5185;&#x5BB9;&#x5982;&#x4E0B;</p>
+<pre><code>$TTL    604800
+@   IN  SOA myzone.example. root.myzone.example. (
+                  2     ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+;
+    IN  NS  ns
+@   IN  A   192.168.1.1
+@   IN  AAAA    ::1
+www IN  A   192.168.1.3
+ns  IN  A   127.0.0.1
+</code></pre><p>&#x56E0;&#x4E3A;&#x542F;&#x7528;&#x4E86;view&#xFF0C;&#x6240;&#x6709;&#x7684;zone&#x5FC5;&#x987B;&#x653E;&#x5728;view&#x91CC;&#x9762;&#xFF0C;&#x914D;&#x7F6E;&#x6587;&#x4EF6;/etc/bind/named.conf&#x91CC;&#x5BF9;/etc/bind/named.conf.default-zones&#x7684;&#x5305;&#x542B;&#x5C31;&#x9700;&#x8981;&#x6CE8;&#x91CA;&#x6389;&#xFF0C;&#x5426;&#x5219;&#x68C0;&#x67E5;&#x4E0D;&#x901A;&#x8FC7;&#xFF0C;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;&#x53CC;&#x659C;&#x6760;&#x6CE8;&#x91CA;&#x6389;
+&#x66F4;&#x6539;&#x4E3A;&#x5982;&#x4E0B;</p>
+<pre><code>include &quot;/etc/bind/named.conf.options&quot;;
+include &quot;/etc/bind/named.conf.local&quot;;
+//include &quot;/etc/bind/named.conf.default-zones&quot;;
+</code></pre><p>&#x6700;&#x540E;&#x786E;&#x8BA4;&#x4E00;&#x4E0B;&#x914D;&#x7F6E;&#x6709;&#x65E0;&#x9519;&#x8BEF;
+&#x7528;<code>named-checkconf</code>&#x68C0;&#x67E5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x683C;&#x5F0F;
+&#x6267;&#x884C;<code>named-checkzone myzone.example /etc/bind/trusted/db.myzone.example</code>
+&#x548C;<code>named-checkzone myzone.example /etc/bind/guest/db.myzone.example</code></p>
+<p>&#x68C0;&#x67E5;zone&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x662F;&#x5426;&#x6B63;&#x786E;</p>
+<p>&#x82E5;&#x65E0;&#x62A5;&#x9519;&#xFF0C;&#x5219;&#x8BF4;&#x660E;zone&#x6587;&#x4EF6;&#x8BED;&#x6CD5;&#x6B63;&#x786E;</p>
+<p>&#x91CD;&#x542F;bind9&#x670D;&#x52A1;&#x6D4B;&#x8BD5;&#x6548;&#x679C;<code>sudo service bind9 restart</code></p>
+<p>zone&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x65E0;&#x8BEF;&#x8FD8;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;bind9&#x6B63;&#x5E38;&#x52A0;&#x8F7D;zone&#x6587;&#x4EF6;&#xFF0C;&#x8FD8;&#x5E94;&#x8FD0;&#x884C;service bind9 status &#x68C0;&#x67E5;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x662F;&#x5426;&#x88AB;&#x6B63;&#x5E38;&#x52A0;&#x8F7D;</p>
+<h2 id="&#x4E09;&#x3001;&#x6D4B;&#x8BD5;">&#x4E09;&#x3001;&#x6D4B;&#x8BD5;</h2>
+<p>&#x5728;&#x672C;&#x673A;&#x4E0A;&#xFF0C;&#x6267;&#x884C;<code>dig @127.0.0.1  www.myzone.example</code> &#x67E5;&#x8BE2;&#x5230;ip&#x4E3A;trusted/db.myzone.example&#x91CC;&#x7684;192.168.1.3
+&#x5728;&#x5C40;&#x57DF;&#x7F51;&#x7684;&#x53E6;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x4E0A;&#xFF0C;&#x4FEE;&#x6539;dns&#x670D;&#x52A1;&#x5668;&#x4E3A;&#x8FD9;&#x53F0;&#x673A;&#x5668;&#x7684;&#x5C40;&#x57DF;&#x7F51;ip&#xFF0C;ping www.myzone.example &#xFF0C;&#x5F97;&#x5230;&#x7684;&#x662F;guest/db.myzone.example &#x91CC;&#x7684;172.16.1.2</p>
+<p>&#x8BF4;&#x660E;&#x914D;&#x7F6E;&#x6210;&#x529F;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x4FBF;&#x53EF;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x533A;&#x57DF;&#x7684;ip&#x5212;&#x5206;&#x4E0D;&#x540C;&#x7684;acl&#x7EC4;&#x6765;&#x5B9E;&#x73B0;dns&#x7684;&#x667A;&#x80FD;&#x89E3;&#x6790;</p>
+<h2 id="&#x56DB;&#x3001;&#x756A;&#x5916;">&#x56DB;&#x3001;&#x756A;&#x5916;</h2>
+<h3 id="&#x68C0;&#x6D4B;&#x4E3B;&#x673A;&#x7684;&#x53EF;&#x7528;&#x6027;">&#x68C0;&#x6D4B;&#x4E3B;&#x673A;&#x7684;&#x53EF;&#x7528;&#x6027;</h3>
+<p>&#x4E3A;&#x4FDD;&#x8BC1;dns&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x6027;&#xFF0C;&#x9700;&#x8981;&#x68C0;&#x6D4B;&#x81EA;&#x5DF1;&#x89E3;&#x6790;&#x7684;&#x6BCF;&#x4E00;&#x53F0;&#x4E3B;&#x673A;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x5DE5;&#x4F5C;</p>
+<h4 id="&#x4F7F;&#x7528;shell-script">&#x4F7F;&#x7528;shell script</h4>
+<p>&#x8FD9;&#x6B63;&#x662F;Linux&#x7684;&#x5F3A;&#x9879;&#xFF0C;&#x4E00;&#x4EFD;shell script&#x8DB3;&#x4EE5;&#x80DC;&#x4EFB;&#x8FD9;&#x4EFD;&#x5DE5;&#x4F5C;</p>
+<pre><code>#!/bin/bash
+server_list=&quot;1.1.1.1 2.2.2.2 3.3.3.3 4.4.4.4&quot;
+
+for i in $server_list
+    do
+    echo &quot;nc -z -w 5 $i 443&quot;
+    nc -z -w 5 $i 443
+    if [ $? -eq 0 ];then
+        echo &quot;server $i is on \n&quot;
+        sed -i &quot;/$i/s/^;//&quot; /etc/bind/db.schonet.*
+    else
+        echo &quot;server $i is off \n&quot;
+        sed -i &quot;/$i/s/^;//&quot; /etc/bind/db.schonet.*
+        sed -i &quot;/$i/s/^/;/&quot; /etc/bind/db.schonet.*
+    fi
+    done
+    service bind9 restart
+</code></pre><p>&#x7B80;&#x8981;&#x8BF4;&#x660E;,&#x5229;&#x7528;sed&#x547D;&#x4EE4;&#x53BB;&#x5339;&#x914D;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E0B;&#x6709;&#x5BF9;&#x5E94;ip&#x7684;&#x89E3;&#x6790;&#x8BB0;&#x5F55;&#xFF0C;&#x6839;&#x636E;nc&#x7684;&#x7ED3;&#x679C;&#x51B3;&#x5B9A;&#x8BE5;&#x53D6;&#x6D88;&#x8FD8;&#x662F;&#x542F;&#x7528;&#x8BE5;&#x6761;&#x89E3;&#x6790;&#x8BB0;&#x5F55;,&#x53EF;&#x5B9A;&#x671F;&#x8FD0;&#x884C;&#x8BE5;&#x811A;&#x672C;&#x66F4;&#x65B0;&#x89E3;&#x6790;&#x7EAA;&#x5F55;</p>
+<p>&#x6BCF;&#x6B21;&#x670D;&#x52A1;&#x5668;&#x53D8;&#x52A8;&#x90FD;&#x8981;&#x624B;&#x52A8;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x4E14;&#x5F88;&#x5BB9;&#x6613;&#x5199;&#x9519;&#xFF0C;&#x4E8E;&#x662F;&#x5229;&#x7528;python&#x8BFB;&#x53D6;&#x670D;&#x52A1;&#x5668;ip&#x4FE1;&#x606F;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x89E3;&#x6790;&#x8BB0;&#x5F55;&#xFF0C;&#x53EA;&#x9700;&#x7EF4;&#x62A4;&#x4E00;&#x4EFD;server.list&#x6587;&#x4EF6;</p>
+<p>server.list&#x6587;&#x4EF6;</p>
+<pre><code>@bnu
+1.1.1.1
+2.2.2.2
+
+@china
+1.2.3.4
+5.6.7.8
+
+@other
+1.1.1.1
+2.2.2.2
+</code></pre><p>python&#x6587;&#x4EF6;&#x4EE3;&#x7801;&#x5982;&#x4E0B;</p>
+<pre><code>with open(&quot;server.list&quot;,&quot;r&quot;) as fin,\
+ open(&quot;/etc/bind/db.schonet.other&quot;,&apos;w&apos;) as fout:
+    base = &apos;&apos;&apos;$TTL    600
+@   IN  SOA schonet.cn. root.schonet.cn. (
+                  2     ; Serial
+                  1H    ; Refresh
+                  5M    ; Retry
+                  1W    ; Expire
+                  10M ) ; Negative Cache TTL
+;
+    IN  NS  ns
+@   IN  A   127.0.0.1
+@   IN  AAAA    ::1
+www IN  A   219.143.237.175
+ns  IN  A   120.25.101.88
+&apos;&apos;&apos;
+    fout.write(base)
+    zones = fin.read().split(&apos;@&apos;)
+    for i in zones[1:]:
+        print(&apos;-&apos;+i)
+        zone = i.split()
+        print(zone[0])
+        for ip in zone[1:]:
+            fout.write(zone[0].ljust(15)+&apos;IN  A    &apos;+ip+&apos;\n&apos;)
+            print(&apos;+&apos;+ip)
+</code></pre><p>&#x8FD0;&#x884C;&#x8FD9;&#x4EFD;&#x811A;&#x672C;&#xFF0C;&#x5C06;&#x6839;&#x636E;server.list&#x6587;&#x4EF6;,&#x751F;&#x6210;bnu.schonet.cn&#x3001;china.schonet.cn&#x7B49;&#x7684;&#x89E3;&#x6790;&#x8BB0;&#x5F55;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: Chapter2 实验室篇">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="section2.2.html" class="navigation navigation-next " aria-label="Next page: 2.2 freeradius认证服务器配置">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"2.1 bind9智能dns解析配置指南","level":"1.3.1","depth":2,"next":{"title":"2.2 freeradius认证服务器配置","level":"1.3.2","depth":2,"path":"chapter2/section2.2.md","ref":"chapter2/section2.2.md","articles":[]},"previous":{"title":"Chapter2 实验室篇","level":"1.3","depth":1,"path":"chapter2/README.md","ref":"chapter2/README.md","articles":[{"title":"2.1 bind9智能dns解析配置指南","level":"1.3.1","depth":2,"path":"chapter2/section2.1.md","ref":"chapter2/section2.1.md","articles":[]},{"title":"2.2 freeradius认证服务器配置","level":"1.3.2","depth":2,"path":"chapter2/section2.2.md","ref":"chapter2/section2.2.md","articles":[]},{"title":"2.3 freeradius数据库配置(mariadb版)","level":"1.3.3","depth":2,"path":"chapter2/section2.3.md","ref":"chapter2/section2.3.md","articles":[]},{"title":"2.4 小米路由器mini / 青春版刷机指南","level":"1.3.4","depth":2,"path":"chapter2/section2.4.md","ref":"chapter2/section2.4.md","articles":[]},{"title":"2.5 树莓派配置为路由器","level":"1.3.5","depth":2,"path":"chapter2/section2.5.md","ref":"chapter2/section2.5.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chapter2/section2.1.md","mtime":"2020-04-28T01:54:42.548Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-28T02:18:37.777Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
