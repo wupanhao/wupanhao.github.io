@@ -82,7 +82,14 @@
         const guqin_nomal_notes = genNotes(guqin_nomal)
 
         const guqin_slow3_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
-        guqin_slow3_notes[2].frequency = 233
+        guqin_slow3_notes[2].frequency = 82.41
+        guqin_slow3_notes[2].name = 'E'
+
+        const guqin_slow36_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
+        guqin_slow36_notes[2].frequency = 82.41
+        guqin_slow36_notes[2].name = 'E'
+        guqin_slow36_notes[5].frequency = 123.47
+        guqin_slow36_notes[5].name = 'B'
 
         const guqin_tight5_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
         guqin_tight5_notes[4].frequency = 116.54
@@ -124,14 +131,18 @@
                 title: '古琴-紧五弦 1=bB',
                 allowPlay: false,
                 notes: guqin_tight5_notes
+            }, {
+                name: 'guqin_loose3',
+                title: '古琴-慢三弦 1=C',
+                allowPlay: false,
+                notes: guqin_slow3_notes
+            }, {
+                name: 'guqin_loose36',
+                title: '古琴-慢三六弦 1=G',
+                allowPlay: false,
+                notes: guqin_slow36_notes
             },
 
-            // {
-            // name: 'guqin_loose3',
-            //     title: '古琴-慢三弦 1=E',
-            //     allowPlay: false,
-            //     notes: guqin_slow3_notes
-            // },
             {
                 name: 'guitar_nomal',
                 title: '吉他-标准',
@@ -157,13 +168,12 @@
             app.start()
         }
 
+        var selection = 0
         const menu = document.querySelector('#menu')
-        let selection = 0
         if (window.location.hash.length > 1) {
             try {
                 selection = parseInt(window.location.hash.substr(1))
             } catch (error) {
-                selection = 0
             }
         }
         console.log(window.location.hash, selection)
