@@ -32,7 +32,7 @@
 
     <script>
 
-        function genPianoNotes(){
+        function genPianoNotes() {
             const piano_notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
             const middleA = 440
             const middleAIndex = 57 // A4 12*4 + 9
@@ -56,6 +56,19 @@
             return notes
         }
 
+        function genNotes(array) {
+            return array.map((item, index) => {
+                return {
+                    name: item[0],
+                    upper: item[1],
+                    lower: item[2],
+                    frequency: item[3],
+                    cents: 0,
+                    value: index
+                }
+            })
+        }
+
         const guqin_nomal = [
             ['C ', '', '一', 65.41],
             ['D ', '', '二', 73.42],
@@ -66,16 +79,7 @@
             ['D', '', '七', 146.83]
         ]
 
-        const guqin_nomal_notes = guqin_nomal.map((item, index) => {
-            return {
-                name: item[0],
-                upper: item[1],
-                lower: item[2],
-                frequency: item[3],
-                cents: 0,
-                value: index
-            }
-        })
+        const guqin_nomal_notes = genNotes(guqin_nomal)
 
         const guqin_slow3_notes = JSON.parse(JSON.stringify(guqin_nomal_notes))
         guqin_slow3_notes[2].frequency = 233
@@ -85,6 +89,23 @@
         guqin_tight5_notes[4].upper = 'b'
         guqin_tight5_notes[4].name = 'B'
 
+
+        const guitar_nomal = [
+            ['E ', '', '六', 82.41],
+            ['A ', '', '五', 110],
+            ['D ', '', '四', 146.83],
+            ['G ', '', '三', 196],
+            ['B ', '', '二', 246.94],
+            ['E ', '', '一', 329.63],
+        ]
+
+        const violin_nomal = [
+            ['G ', '', '四', 196],
+            ['D ', '', '三', 293.66],
+            ['A ', '', '二', 440],
+            ['E ', '', '一', 659.26],
+        ]
+
         const app = new Application()
 
         const items = [
@@ -93,49 +114,64 @@
                 title: '钢琴 A4=440hz',
                 allowPlay: true,
                 notes: genPianoNotes()
-            },{
+            }, {
                 name: 'guqin',
                 title: '古琴-正调 1=F',
                 allowPlay: false,
                 notes: guqin_nomal_notes
-            },{
+            }, {
                 name: 'guqin_tight5',
                 title: '古琴-紧五弦 1=bB',
                 allowPlay: false,
                 notes: guqin_tight5_notes
             },
+
             // {
             // name: 'guqin_loose3',
             //     title: '古琴-慢三弦 1=E',
             //     allowPlay: false,
             //     notes: guqin_slow3_notes
             // },
+            {
+                name: 'guitar_nomal',
+                title: '吉他-标准',
+                allowPlay: false,
+                notes: genNotes(guitar_nomal)
+            },
+            {
+                name: 'violin_nomal',
+                title: '小提琴-标准',
+                allowPlay: false,
+                notes: genNotes(violin_nomal)
+            },
+
         ]
 
-        function onItemSelected(){
+        function onItemSelected() {
             const item = document.querySelector('#menu')
             console.log(item.value)
             const selection = items[item.value]
-            window.location.hash = '#'+item.value
+            window.location.hash = '#' + item.value
             app.notes.allowPlay = selection.allowPlay
             app.notes.setNotes(selection.notes)
             app.start()
         }
 
         const menu = document.querySelector('#menu')
-        if(window.location.hash.length > 1){
+        let selection = 0
+        if (window.location.hash.length > 1) {
             try {
                 selection = parseInt(window.location.hash.substr(1))
             } catch (error) {
                 selection = 0
             }
         }
-        console.log(window.location.hash,selection)
+        console.log(window.location.hash, selection)
 
         for (let index = 0; index < items.length; index++) {
             const item = items[index];
             const ele = document.createElement('option')
-            if(index == selection){
+            if (index == selection) {
                 ele.selected = true
             }
             ele.value = index
