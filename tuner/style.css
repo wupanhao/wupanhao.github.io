@@ -18,6 +18,7 @@ body {
     padding: 5px;
     margin: 10px;
     border-radius: 3px;
+    position: fixed;
 }
 
 .notes {
@@ -91,7 +92,7 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 50%;
+    bottom: 48%;
     width: 400px;
     height: 33%;
     margin: 0 auto 5vh auto;
