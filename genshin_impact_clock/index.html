@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原神时钟</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
+            background-color: rgba(5, 5, 5, 1);
+            overflow: hidden;
+        }
+
+        #clock-container {
+            width: 960px;
+            height: 960px;
+            /* scale: 0.7; */
+            position: relative;
+        }
+
+        .digital-time {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .date-display {
+            margin-top: 5px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock-container">
+        <div class="digital-time">
+            <div id="time-display"></div>
+            <div class="date-display" id="date-display"></div>
+        </div>
+    </div>
+
+    <!-- 引入PixiJS库 -->
+    <!-- <script src="https://pixijs.download/v6.4.0/pixi.min.js"></script> -->
+    <script src="pixi.min.js"></script>
+
+    <!-- https://github.com/pixijs-userland/gif/releases/download/v1.1.3/pixi-gif.js -->
+    <script src="pixi-gif.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 创建Pixi应用
+            const app = new PIXI.Application({
+                width: 960,
+                height: 960,
+                // backgroundColor: 0x050505,
+                // backgroundColor: 0xFFFFFF,
+                transparent: true,
+                antialias: true,
+                resolution: 1,
+            });
+
+            document.getElementById('clock-container').insertBefore(app.view, document.getElementById('clock-container').firstChild);
+
+            // 加载资源
+            const loader = PIXI.Loader.shared;
+
+            // 使用在线图片资源（您也可以替换为自己的图片路径）
+            loader.add('bg', 'bg.png')
+                // .add('stars', 'stars.gif')
+                .add('clockBg1', 'UI_Img_Horoscope01.png')
+                .add('clockBg2', 'UI_Img_Horoscope02.png')
+                .add('clockFace', 'UI_Clock_Dial.png')
+                .add('sun', 'sun.png')
+                .add('moon', 'moon.png')
+                .add('sunrise', 'sunrise.png')
+                .add('sunset', 'sunset.png')
+                .add('hourHand', 'UI_Clock_HourHand.png')
+                .add('minuteHand', 'UI_Clock_MinuteHand.png')
+                .add('secondHand', 'hand_s.png')
+                .add('gear1', 'Horoscope03.png')
+                .add('gear2', 'Horoscope04.png')
+                .add('gear3', 'Horoscope05.png')
+                .add('gear4', 'UI_Img_Horoscope06.png');
+
+            loader.load((loader, resources) => {
+
+                // 创建一个几何体图形,几何体遮罩，这是一个圆
+                const mask = new PIXI.Graphics();
+                mask.beginFill(0x00000000);
+                mask.drawCircle(app.screen.width / 2, app.screen.height / 2, 232); //三个参数是x, y 和 radius。
+                mask.endFill();
+                // app.stage.addChild(mask);
+
+                const bg = new PIXI.Sprite(resources.bg.texture);
+                bg.anchor.set(0.5);
+                bg.x = app.screen.width / 2;
+                bg.y = app.screen.height / 2;
+                bg.scale.set(1.2);
+                bg.mask = mask;
+                app.stage.addChild(bg);
+
+                fetch('stars.gif')
+                    .then(res => res.arrayBuffer())
+                    .then(PIXI.gif.AnimatedGIF.fromBuffer)
+                    .then(stars => {
+                        stars.anchor.set(0.5);
+                        stars.x = app.screen.width / 2;
+                        stars.y = app.screen.height / 2;
+                        stars.scale.set(0.86);
+                        stars.mask = mask;
+                        app.stage.addChild(stars);
+                    });
+
+                // 创建齿轮
+                const gear1 = new PIXI.Sprite(resources.gear1.texture);
+                gear1.anchor.set(0.5);
+                gear1.x = app.screen.width / 2 + 51;
+                gear1.y = app.screen.height / 2 - 33;
+                gear1.scale.set(1);
+                gear1.alpha = 0.8;
+                gear1.mask = mask;
+                app.stage.addChild(gear1);
+
+                const gear2 = new PIXI.Sprite(resources.gear2.texture);
+                gear2.anchor.set(0.5);
+                gear2.x = app.screen.width / 2 - 72;
+                gear2.y = app.screen.height / 2 + 41;
+                gear2.scale.set(1);
+                gear2.alpha = 0.8;
+                gear2.mask = mask;
+                app.stage.addChild(gear2);
+
+                const gear3 = new PIXI.Sprite(resources.gear3.texture);
+                gear3.anchor.set(0.5);
+                gear3.x = app.screen.width / 2 + 207;
+                gear3.y = app.screen.height / 2 + 118;
+                gear3.scale.set(1);
+                gear3.alpha = 0.8;
+                gear3.mask = mask;
+                app.stage.addChild(gear3);
+
+                const gear4 = new PIXI.Sprite(resources.gear4.texture);
+                gear4.anchor.set(0.5);
+                gear4.x = app.screen.width / 2;
+                gear4.y = app.screen.height / 2;
+                gear4.scale.set(1);
+                gear4.alpha = 0.8;
+                gear4.mask = mask;
+                app.stage.addChild(gear4);
+
+                const gear5 = new PIXI.Sprite(resources.gear4.texture);
+                gear5.anchor.set(0.5);
+                gear5.x = app.screen.width / 2 + 96;
+                gear5.y = app.screen.height / 2 - 214;
+                gear5.scale.set(1);
+                gear5.alpha = 0.8;
+                gear5.mask = mask;
+                app.stage.addChild(gear5);
+
+                const gear6 = new PIXI.Sprite(resources.gear4.texture);
+                gear6.anchor.set(0.5);
+                gear6.x = app.screen.width / 2 + 207;
+                gear6.y = app.screen.height / 2 + 115;
+                gear6.scale.set(1);
+                gear6.alpha = 0.8;
+                gear6.mask = mask;
+                app.stage.addChild(gear6);
+
+                // 创建表盘
+                const clockBg1 = new PIXI.Sprite(resources.clockBg1.texture);
+                clockBg1.anchor.set(0.5);
+                clockBg1.x = app.screen.width / 2;
+                clockBg1.y = app.screen.height / 2;
+                clockBg1.scale.set(1);
+                app.stage.addChild(clockBg1);
+
+                const clockBg2 = new PIXI.Sprite(resources.clockBg2.texture);
+                clockBg2.anchor.set(0.5);
+                clockBg2.x = app.screen.width / 2;
+                clockBg2.y = app.screen.height / 2;
+                clockBg2.scale.set(1);
+                app.stage.addChild(clockBg2);
+
+                const clockFace = new PIXI.Sprite(resources.clockFace.texture);
+                clockFace.anchor.set(0.5);
+                clockFace.x = app.screen.width / 2;
+                clockFace.y = app.screen.height / 2;
+                clockFace.scale.set(1.05);
+                app.stage.addChild(clockFace);
+
+                const sun = new PIXI.Sprite(resources.sun.texture);
+                sun.anchor.set(0.5);
+                sun.x = app.screen.width / 2;
+                sun.y = app.screen.height / 2 - 336;
+                sun.scale.set(0.95);
+                app.stage.addChild(sun);
+
+                const moon = new PIXI.Sprite(resources.moon.texture);
+                moon.anchor.set(0.5);
+                moon.x = app.screen.width / 2;
+                moon.y = app.screen.height / 2 + 336;
+                moon.scale.set(1);
+                app.stage.addChild(moon);
+
+                const sunrise = new PIXI.Sprite(resources.sunrise.texture);
+                sunrise.anchor.set(0.5);
+                sunrise.x = app.screen.width / 2 - 336;
+                sunrise.y = app.screen.height / 2;
+                sunrise.scale.set(1);
+                app.stage.addChild(sunrise);
+
+                const sunset = new PIXI.Sprite(resources.sunset.texture);
+                sunset.anchor.set(0.5);
+                sunset.x = app.screen.width / 2 + 336;
+                sunset.y = app.screen.height / 2;
+                sunset.scale.set(1);
+                app.stage.addChild(sunset);
+
+                // 创建秒针
+                const secondHand = new PIXI.Sprite(resources.secondHand.texture);
+                secondHand.anchor.set(0.5, 1.12);
+                secondHand.x = app.screen.width / 2;
+                secondHand.y = app.screen.height / 2;
+                secondHand.scale.set(1.8);
+                app.stage.addChild(secondHand);
+
+                // 创建分针
+                const minuteHand = new PIXI.Sprite(resources.minuteHand.texture);
+                minuteHand.anchor.set(0.5, 1.06);
+                minuteHand.x = app.screen.width / 2;
+                minuteHand.y = app.screen.height / 2;
+                minuteHand.scale.set(1, 1.2);
+                app.stage.addChild(minuteHand);
+
+                // 创建时针
+                const hourHand = new PIXI.Sprite(resources.hourHand.texture);
+                hourHand.anchor.set(0.5, 1 - 0.192);
+                hourHand.x = app.screen.width / 2;
+                hourHand.y = app.screen.height / 2 + 1;
+                hourHand.scale.set(0.8);
+                app.stage.addChild(hourHand);
+
+
+                // 数字时间显示元素
+                const timeDisplay = document.getElementById('time-display');
+                const dateDisplay = document.getElementById('date-display');
+
+                // 动画循环
+                app.ticker.add((delta) => {
+                    const now = new Date();
+                    const hours = now.getHours() % 12;
+                    const minutes = now.getMinutes();
+                    const seconds = now.getSeconds();
+                    const milliseconds = now.getMilliseconds();
+
+                    // 计算指针角度
+                    const secondAngle = (seconds + milliseconds / 1000) * 6; // 360/60 = 6度每秒
+                    const minuteAngle = (minutes + seconds / 60) * 6;       // 360/60 = 6度每分
+                    const hourAngle = (hours + minutes / 60) * 30;          // 360/12 = 30度每小时
+
+                    // 更新指针旋转
+                    hourHand.rotation = hourAngle * (Math.PI / 180);
+                    minuteHand.rotation = minuteAngle * (Math.PI / 180);
+                    secondHand.rotation = secondAngle * (Math.PI / 180);
+
+                    // 更新齿轮旋转
+                    bg.rotation -= 0.0005 * delta;
+                    gear1.rotation -= 0.0015 * delta;
+                    gear2.rotation -= 0.0015 * delta;
+                    gear3.rotation += 0.00225 * delta;
+                    gear4.rotation -= 0.00375 * delta;
+                    gear5.rotation -= 0.00375 * delta;
+                    gear6.rotation += 0.00375 * delta;
+
+                    // // 更新数字时间显示
+                    // const formattedHours = hours === 0 ? 12 : hours;
+                    // const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+                    // timeDisplay.textContent = `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+
+                    // // 更新日期显示
+                    // const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    // dateDisplay.textContent = now.toLocaleDateString('zh-CN', options);
+                });
+            });
+
+            // 处理加载错误
+            loader.onError.add((error) => {
+                console.error('加载错误:', error.message);
+            });
+        });
+
+        function clickFullScreen(e) {
+            console.log(e)
+            e = document.documentElement
+            if (e.requestFullscreen) {
+                e.requestFullscreen();
+            }/*FireFox */ else if (e.mozRequestFullScreen) {
+                e.mozRequestFullScreen();
+            }/*Chrome等 */ else if (e.webkitRequestFullScreen) {
+                e.webkitRequestFullScreen();
+            }/*IE11*/ else if (e.msRequestFullscreen) {
+                e.msRequestFullscreen();
+            }
+
+        }
+
+        function resize() {
+            // const innerWidth = window.screen.width
+            // const innerHeight = window.screen.height
+            const innerWidth = document.body.clientWidth
+            const innerHeight = document.body.clientHeight
+            // if (innerWidth < 960 || innerHeight < 960) {
+            if (1) {
+                if (innerWidth > innerHeight) {
+                    document.querySelector('#clock-container').style.scale = innerHeight / 960.0
+                } else {
+                    document.querySelector('#clock-container').style.scale = innerWidth / 960.0
+                }
+                console.log(innerWidth, innerHeight, document.querySelector('#clock-container').style.scale)
+            }
+        }
+        resize()
+
+        document.addEventListener('click', clickFullScreen)
+        document.addEventListener('touchend', clickFullScreen)
+        addEventListener('resize', resize)
+
+    </script>
+</body>
+
+</html>
