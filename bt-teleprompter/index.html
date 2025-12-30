@@ -395,24 +395,24 @@
         updateTime();
         setInterval(updateTime, 60000); // 每分钟更新一次
 
-        // 5秒后恢复标题
-        setTimeout(() => {
-            // document.title = originalTitle;
-            if ("mediaSession" in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: document.title,
-                    artist: "Nat King Cole",
-                    album: "The Ultimate Collection (Remastered)",
-                    artwork: [
-                        {
-                            src: "https://dummyimage.com/96x96",
-                            sizes: "96x96",
-                            type: "image/png",
-                        },
-                    ],
-                });
-            }
-        }, 5000);
+        // // 5秒后恢复标题
+        // setTimeout(() => {
+        //     // document.title = originalTitle;
+        //     if ("mediaSession" in navigator) {
+        //         navigator.mediaSession.metadata = new MediaMetadata({
+        //             title: document.title,
+        //             artist: "Nat King Cole",
+        //             album: "The Ultimate Collection (Remastered)",
+        //             artwork: [
+        //                 {
+        //                     src: "https://dummyimage.com/96x96",
+        //                     sizes: "96x96",
+        //                     type: "image/png",
+        //                 },
+        //             ],
+        //         });
+        //     }
+        // }, 5000);
 
         // 格式化时间显示
         function formatTime(date) {
@@ -437,7 +437,7 @@
 
                 if ("mediaSession" in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
-                        title: document.title,
+                        title: message,
                         artist: "bt-teleprompter",
                         album: "album",
                         artwork: [
@@ -578,8 +578,8 @@
 
         // 处理发送消息
         function sendMessage() {
-            const message = messageInput.value.trim();
-            if (message === '') return;
+            const message = messageInput.value;
+            if (message.trim() === '') return;
 
             // 更新页面标题
             updatePageTitle(message);
