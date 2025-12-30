@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蓝牙提词器</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 85vh;
+        }
+
+        .app-header {
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .app-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .app-header .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.received {
+            align-self: flex-start;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .message.received .message-avatar {
+            background: linear-gradient(to bottom right, #4776E6, #8E54E9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .message.sent .message-avatar {
+            background: linear-gradient(to bottom right, #4CAF50, #8BC34A);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .message-content {
+            margin: 0 12px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            position: relative;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .message.received .message-content {
+            background-color: white;
+            border-top-left-radius: 5px;
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            color: white;
+            border-top-right-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+
+        .message.received .message-time {
+            text-align: left;
+        }
+
+        .message.sent .message-time {
+            text-align: right;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .input-container {
+            padding: 20px;
+            background-color: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .message-input:focus {
+            border-color: #8E54E9;
+        }
+
+        .send-button {
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            color: white;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(142, 84, 233, 0.3);
+        }
+
+        .send-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(142, 84, 233, 0.4);
+        }
+
+        .send-button:active {
+            transform: translateY(0);
+        }
+
+        .audio-controls {
+            padding: 0 20px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .audio-toggle {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .audio-toggle:hover {
+            background-color: #e0e0e0;
+        }
+
+        .audio-toggle.active {
+            background-color: #8E54E9;
+            color: white;
+        }
+
+        .hidden-audio {
+            display: none;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: 90vh;
+                max-width: 95%;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .app-header h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* 滚动条样式 */
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="app-header">
+            <div>
+                <h1>蓝牙提词器</h1>
+                <div class="status">
+                    <div class="status-indicator"></div>
+                    <span>在线</span>
+                </div>
+            </div>
+            <div id="current-time"></div>
+        </div>
+
+        <div class="chat-container" id="chat-container">
+            <!-- 聊天消息会在这里动态添加 -->
+            <div class="message received">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <div class="message-text">你好！欢迎使用蓝牙提词器。发送消息时，字幕会更新。</div>
+                    <div class="message-time">今天 10:00</div>
+                </div>
+            </div>
+
+            <!-- <div class="message sent">
+                <div class="message-avatar">我</div>
+                <div class="message-content">
+                    <div class="message-text">这个应用看起来很棒！</div>
+                    <div class="message-time">今天 10:02</div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="audio-controls">
+            <button id="audio-toggle" class="audio-toggle">
+                <i class="fas fa-volume-up"></i>
+                <span>提示音: 开启</span>
+            </button>
+            <span id="audio-status">点击发送按钮时会播放提示音</span>
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="message-input" id="message-input" placeholder="输入消息..." autocomplete="off">
+            <button class="send-button" id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 隐藏的音频控件 -->
+    <audio id="message-audio" class="hidden-audio" preload="auto" loop>
+        <source src="generated_audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 通知 -->
+    <div class="notification" id="notification">
+        <i class="fas fa-volume-up"></i>
+        <span>已播放提示音</span>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const messageAudio = document.getElementById('message-audio');
+        const audioToggle = document.getElementById('audio-toggle');
+        const audioStatus = document.getElementById('audio-status');
+        const notification = document.getElementById('notification');
+        const currentTimeElement = document.getElementById('current-time');
+
+        // 音频播放状态
+        let audioEnabled = true;
+
+        // 更新当前时间
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            currentTimeElement.textContent = timeString;
+        }
+
+        // 初始化时间
+        updateTime();
+        setInterval(updateTime, 60000); // 每分钟更新一次
+
+        // 5秒后恢复标题
+        setTimeout(() => {
+            // document.title = originalTitle;
+            if ("mediaSession" in navigator) {
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: document.title,
+                    artist: "Nat King Cole",
+                    album: "The Ultimate Collection (Remastered)",
+                    artwork: [
+                        {
+                            src: "https://dummyimage.com/96x96",
+                            sizes: "96x96",
+                            type: "image/png",
+                        },
+                    ],
+                });
+            }
+        }, 5000);
+
+        // 格式化时间显示
+        function formatTime(date) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        // 根据消息内容更新页面标题
+        function updatePageTitle(message) {
+            const originalTitle = "蓝牙提词器";
+            const maxLength = 30;
+
+            if (message.trim() === "") {
+                document.title = originalTitle;
+            } else {
+                let titleMessage = message;
+                if (message.length > maxLength) {
+                    titleMessage = message.substring(0, maxLength) + "...";
+                }
+                document.title = `${titleMessage}`;
+
+                if ("mediaSession" in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: document.title,
+                        artist: "bt-teleprompter",
+                        album: "album",
+                        artwork: [
+                            {
+                                src: "https://dummyimage.com/96x96",
+                                sizes: "96x96",
+                                type: "image/png",
+                            },
+                        ],
+                    });
+
+                    navigator.mediaSession.setActionHandler("play", () => {
+                        /* Code excerpted. */
+                        messageAudio.play()
+                    });
+                    navigator.mediaSession.setActionHandler("pause", () => {
+                        /* Code excerpted. */
+                        messageAudio.pause()
+                    });
+                    navigator.mediaSession.setActionHandler("stop", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("seekbackward", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("seekforward", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("seekto", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("previoustrack", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("nexttrack", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("skipad", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("togglecamera", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("togglemicrophone", () => {
+                        /* Code excerpted. */
+                    });
+                    navigator.mediaSession.setActionHandler("hangup", () => {
+                        /* Code excerpted. */
+                    });
+                }
+
+                // 5秒后恢复原始标题
+                // setTimeout(() => {
+                //     document.title = originalTitle;
+                //     if ("mediaSession" in navigator) {
+                //         navigator.mediaSession.metadata = new MediaMetadata({
+                //             title: originalTitle,
+                //             artist: "Nat King Cole",
+                //             album: "The Ultimate Collection (Remastered)",
+                //             artwork: [
+                //                 {
+                //                     src: "https://dummyimage.com/96x96",
+                //                     sizes: "96x96",
+                //                     type: "image/png",
+                //                 },
+                //             ],
+                //         });
+                //     }
+                // }, 5000);
+            }
+        }
+
+        // 播放提示音
+        function playNotificationSound() {
+            if (!audioEnabled) return;
+
+            messageAudio.currentTime = 0; // 重置音频到开始
+            messageAudio.play().then(() => {
+                // 显示通知
+                // notification.style.display = "flex";
+                // setTimeout(() => {
+                //     notification.style.display = "none";
+                // }, 2000);
+
+                // setTimeout(() => {
+                //     messageAudio.pause()
+                // }, 2000);
+
+            }).catch(error => {
+                console.log("音频播放失败:", error);
+                audioStatus.textContent = "提示音播放失败，请检查浏览器设置";
+            });
+        }
+
+        // 添加新消息到聊天界面
+        function addMessage(content, isSent = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+
+            const time = new Date();
+            const timeString = formatTime(time);
+
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isSent ? '我' : 'AI'}</div>
+                <div class="message-content">
+                    <div class="message-text">${content}</div>
+                    <div class="message-time">${timeString}</div>
+                </div>
+            `;
+
+            chatContainer.appendChild(messageDiv);
+
+            // 滚动到最新消息
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 如果是用户发送的消息，添加AI回复
+            if (isSent) {
+                // setTimeout(() => addBotReply(content), 1000);
+            }
+        }
+
+        // 添加AI回复
+        function addBotReply(userMessage) {
+            const replies = [
+                "我明白了，你发送了：" + userMessage,
+                "感谢你的消息！",
+                "很有趣的观点，请继续分享。",
+                "我已经收到你的消息。",
+                "好的，我记下了。",
+                "谢谢分享！",
+                "这是一个很好的话题。",
+                "我会考虑你所说的内容。"
+            ];
+
+            const randomReply = replies[Math.floor(Math.random() * replies.length)];
+            addMessage(randomReply, false);
+        }
+
+        // 处理发送消息
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message === '') return;
+
+            // 更新页面标题
+            updatePageTitle(message);
+
+            // 添加消息到聊天界面
+            addMessage(message, true);
+
+            // 播放提示音
+            playNotificationSound();
+
+            // 清空输入框
+            messageInput.value = '';
+            messageInput.focus();
+        }
+
+        // 事件监听
+        sendButton.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // 音频开关
+        audioToggle.addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+
+            if (audioEnabled) {
+                audioToggle.classList.add('active');
+                audioToggle.innerHTML = '<i class="fas fa-volume-up"></i><span>提示音: 开启</span>';
+                audioStatus.textContent = "点击发送按钮时会播放提示音";
+            } else {
+                audioToggle.classList.remove('active');
+                audioToggle.innerHTML = '<i class="fas fa-volume-mute"></i><span>提示音: 关闭</span>';
+                audioStatus.textContent = "提示音已关闭";
+            }
+        });
+
+        // 添加示例消息
+        window.addEventListener('DOMContentLoaded', () => {
+            // 添加一些初始消息
+            setTimeout(() => {
+                addMessage("试试发送一条消息，看看提词器如何变化！", false);
+            }, 1500);
+
+            // 设置输入框焦点
+            messageInput.focus();
+        });
+
+        // 添加页面离开/返回时的标题处理
+        // document.addEventListener('visibilitychange', function () {
+        //     if (document.hidden) {
+        //         // 页面隐藏时，保存当前标题
+        //         document.title = "请回来聊天！";
+        //     } else {
+        //         // 页面再次可见时，恢复原始标题
+        //         document.title = "聊天应用";
+        //     }
+        // });
+    </script>
+</body>
+
+</html>
